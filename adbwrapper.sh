@@ -2,7 +2,7 @@
 
 # This is a wrapper for adb.
 # If there are multiple devices / emulators, this script will prompt for which device to use.
-# Then it'll pass whatever commands to that specific device or emulator.
+# Then it'll pass the specified commands to the selected device.
 
 # Include the shell script that contains the function to select a device
 source $SHELL_SCRIPTS_HOME/adbwrapper-func.sh

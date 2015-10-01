@@ -15,5 +15,5 @@ if [[ "$SELECTED_DEVICE" = "0" ]]; then
   exit 0;
 fi
 
-# Execute the requested command
+# Send the given text to the device
 adb -s ${SELECTED_DEVICE} shell input text $@

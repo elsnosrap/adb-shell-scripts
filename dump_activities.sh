@@ -14,4 +14,5 @@ if [[ "$SELECTED_DEVICE" = "0" ]]; then
   exit 0;
 fi
 
+# Dump the activities on the device
 adb -s $SELECTED_DEVICE shell dumpsys activity activities
