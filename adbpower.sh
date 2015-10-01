@@ -2,52 +2,19 @@
 
 # This script powers on, and unlocks a device.
 # If there are multiple devices / emulators, this script will prompt for which device to use.
-# Most of this code is from adb-wrapper.sh
 
-# Run adb devices once, in event adb hasn't been started yet
-BLAH=$(adb devices)
+# Include the shell script that contains the function to select a device
+source $SHELL_SCRIPTS_HOME/adbwrapper-func.sh
 
-# Grab the IDs of all the connected devices / emulators
-IDS=($(adb devices | sed '1,1d' | sed '$d' | cut -f 1 | sort))
-NUMIDS=${#IDS[@]}
+# Get the device to use for this command
+selectDevice SELECTED_DEVICE
 
-# Check for number of connected devices / emulators
-if [[ 0 -eq "$NUMIDS" ]]; then
-  # No IDs, exit
-  echo "No emulators or devices detected - nothing to power on."
-  exit 0;
-elif [[ 1 -eq "$NUMIDS" ]]; then
-  # Just one device / emulator
-  adb shell input keyevent 26
-  adb shell input keyevent 82
+# Make sure the user selected a device
+if [[ "$SELECTED_DEVICE" = "0" ]]; then
+  echo "Please select a valid device"
   exit 0;
 fi
 
-# If we got here, there are multiple devices, need to get information then prompt user for which device/emulator to uninstall from
-
-# Grab the model name for each device / emulator
-declare -a MODEL_NAMES
-for (( x=0; x < $NUMIDS; x++ )); do
-  MODEL_NAMES[x]=$(adb devices | grep ${IDS[$x]} | cut -f 1 | xargs -I $ adb -s $ shell cat /system/build.prop | grep "ro.product.model" | cut -d "=" -f 2 | tr -d ' \r\t\n')
-done
-
-# Grab the platform version for each device / emulator
-declare -a PLATFORM_VERSIONS
-for (( x=0; x < $NUMIDS; x++ )); do
-  PLATFORM_VERSIONS[x]=$(adb devices | grep ${IDS[$x]} | cut -f 1 | xargs -I $ adb -s $ shell cat /system/build.prop | grep "ro.build.version.release" | cut -d "=" -f 2 | tr -d ' \r\t\n')
-done
-
-echo "Multiple devices detected, please select one"
-for (( x=0; x < $NUMIDS; x++ )); do
-  echo -e "$[x+1]: ${IDS[x]}\t\t${PLATFORM_VERSIONS[x]}\t\t${MODEL_NAMES[x]}"
-done
-echo -n "> "
-read USER_CHOICE
-
-# Validate user entered a number
-if [[ $USER_CHOICE =~ ^[0-9]+$ ]]; then
-  adb -s ${IDS[$USER_CHOICE-1]} shell input keyevent 26
-  adb -s ${IDS[$USER_CHOICE-1]} shell input keyevent 82
-else
-  echo "You must enter a number"
-fi
+# Run the commands to power on the device and do a 'swipe-to-unlock'
+adb -s $SELECTED_DEVICE shell input keyevent 26
+adb -s $SELECTED_DEVICE shell input keyevent 82
