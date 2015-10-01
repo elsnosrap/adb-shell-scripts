@@ -5,29 +5,27 @@
 # Usage function
 function usage() {
 	echo "The following options are supported:"
-	echo "-w"
+	echo "-w, --wipe"
 	echo "	Wipes all user data on the emulator"
 	echo " "
-	echo "-n [OPTION]"
+	echo "-n, --network-speed [OPTION]"
 	echo "	Runs the emulator at either 3g or HSDPA speeds.  Specify either 3g or hsdpa for [OPTION]."
 	echo " "
-	echo " -s [OPTION]"
-	echo "	sets the scale to use"
-	echo "-h"
+	echo "-h, --help"
 	echo "	Display this help"
 }
 
 # Parse command line arguments
-ARGS=`getopt wn:hs: $*`
+ARGS=$(getopt -o wn:hs: -l "wipe,network-speed:,help,scale:" -n "emulator.sh" -- "$@");
 SCALE=".41";
 eval set -- "$ARGS";
 while true; do
 	case "$1" in
-		-w)
+		-w|--wipe)
 			WIPE="-wipe-data";
 			shift;
 		;;
-		-n)
+		-n|--network-speed)
 			shift;
 			if [ -n "$1" ]; then
 				if [ "$1" == "3g" ]; then
@@ -39,14 +37,14 @@ while true; do
 				shift;							
 			fi
 		;;
-		-s)
+		-s|--scale)
 			shift;
 			if [ -n "$1" ]; then
 				SCALE="$1";
 				shift;
 			fi
 		;;
-		-h)
+		-h|--help)
 			shift;
 			usage
 			exit 0
