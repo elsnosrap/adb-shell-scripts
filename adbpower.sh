@@ -15,6 +15,14 @@ if [[ "$SELECTED_DEVICE" = "0" ]]; then
   exit 0;
 fi
 
-# Run the commands to power on the device and do a 'swipe-to-unlock'
+# Send the command to turn the device on
 adb -s $SELECTED_DEVICE shell input keyevent 26
+
+# If '0' was passed in, just exit as that means power the device off
+if [[ "$1" = "0" ]]; then
+  exit 0;
+fi
+
+# User either passed in no other command, or they passed in something we don't care about.
+# Send the command to 'swipe to unlock'
 adb -s $SELECTED_DEVICE shell input keyevent 82
