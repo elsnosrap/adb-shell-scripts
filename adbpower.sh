@@ -26,3 +26,12 @@ fi
 # User either passed in no other command, or they passed in something we don't care about.
 # Send the command to 'swipe to unlock'
 adb -s $SELECTED_DEVICE shell input keyevent 82
+
+# If supplied a pin code, enter it
+if [[ "$#" = 1 && "$1" != "0" ]]; then
+  # Enter the supplied value as the pin
+  adb -s ${SELECTED_DEVICE} shell input text $1
+
+  # Press the 'Enter' button to unlock the device
+  adb -s $SELECTED_DEVICE shell input keyevent 66
+fi
