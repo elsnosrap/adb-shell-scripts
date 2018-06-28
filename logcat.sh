@@ -2,11 +2,11 @@
 # logcat.sh - Script to display logcat for a single app
 
 # Enter the app's package name in the following variable
-APP_ID="com.brightcove.tinasample"
+APP_ID="com.brightcove.lightbox"
 APP_ID2="com.brightcove.testvideo"
 
 # The regular expression to be used when filtering out lines
-FILTER_SUPPRESS_REGEX="onMeasure|setMeasuredDimension"
+FILTER_SUPPRESS_REGEX="onMeasure|setMeasuredDimension|WifiService|PowerManagerService|DeviceScanner"
 
 # Usage function
 function usage() {

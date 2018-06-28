@@ -16,4 +16,6 @@ if [[ "$SELECTED_DEVICE" = "0" ]]; then
 fi
 
 # Take the screen shot and dump to a file
-adb -s ${SELECTED_DEVICE} shell screencap -p | perl -pe 's/\x0D\x0A/\x0A/g' > ./screencap.png
+# Perl part is no longer required
+#adb -s ${SELECTED_DEVICE} shell screencap -p | perl -pe 's/\x0D\x0A/\x0A/g' > ./screencap.png
+adb -s ${SELECTED_DEVICE} shell screencap -p > ./screencap.png

@@ -13,8 +13,11 @@ if [[ "$SELECTED_DEVICE" = "0" ]]; then
   exit 0;
 fi
 
-# Clear the log
-adb -s $SELECTED_DEVICE logcat -c
+# If user specified "-c" flag, clear the log
+if [[ "$#" = 1 && "$1" = "-c" ]]; then
+	# Clear the log
+	adb -s $SELECTED_DEVICE logcat -c
+fi
 
 # Start logcat and tee it to a file
 adb -s $SELECTED_DEVICE logcat -v threadtime | tee ./logcat.log

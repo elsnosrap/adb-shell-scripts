@@ -4,7 +4,7 @@
 
 # Apps to wipe
 #APP_NAME[0]="com.bcgs.commonfilms"
-APP_NAME[0]="com.brightcove.multiactivitysample"
+APP_NAME[0]="jp.hulu.androidtv.dev"
 NUMAPPS=${#APP_NAME[@]}
 
 # Include the shell script that contains the function to select a device
