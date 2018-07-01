@@ -4,20 +4,6 @@
 
 # Apps to remove
 #APP_NAME[0]="com.bcgs.commonfilms"
-#APP_NAME[1]="com.brightcove.multiactivitysample"
-#APP_NAME[0]="jp.happyon.android.static"
-#APP_NAME[1]="jp.happyon.android.dynamic"
-#APP_NAME[2]="jp.happyon.android.production"
-#APP_NAME[3]="jp.happyon.android"
-#APP_NAME[2]="com.brightcove.nh4sample"
-#APP_NAME[0]="com.brightcove.lightbox"
-#APP_NAME[1]="com.brightcove.lightbox.qa"
-#APP_NAME[2]="com.brightcove.lightbox.test"
-#APP_NAME[0]="com.marathonventures.nosey"
-#APP_NAME[3]="com.marathonventures.nosey.qa"
-#APP_NAME[3]="org.metopera.dev"
-#APP_NAME[4]="com.google.android.exoplayer.demo"
-#APP_NAME[0]="com.settv.testplayer"
 
 NUMAPPS=${#APP_NAME[@]}
 
@@ -30,6 +16,12 @@ selectDevice SELECTED_DEVICE
 # Make sure the user selected a device
 if [[ "$SELECTED_DEVICE" = "0" ]]; then
 	echo "Please select a valid device"
+	exit 0;
+fi
+
+# Make sure there are apps to remove
+if [[ "$NUMAPPS" = "0" ]]; then
+	echo "There are no apps to remove"
 	exit 0;
 fi
 
