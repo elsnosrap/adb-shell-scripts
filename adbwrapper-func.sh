@@ -34,13 +34,13 @@ function selectDevice() {
     # Grab the model name for each device / emulator
     declare -a MODEL_NAMES
     for (( x=0; x < $NUMIDS; x++ )); do
-      MODEL_NAMES[x]=$(adb devices | grep ${IDS[$x]} | cut -f 1 | xargs -I $ adb -s $ shell cat /system/build.prop | grep "ro.product.model" | cut -d "=" -f 2 | tr -d ' \r\t\n')
+      MODEL_NAMES[x]=$(adb devices | grep ${IDS[$x]} | cut -f 1 | xargs -I $ adb -s $ shell cat /system/build.prop 2> /dev/null | grep "ro.product.model" | cut -d "=" -f 2 | tr -d ' \r\t\n')
     done
 
     # Grab the platform version for each device / emulator
     declare -a PLATFORM_VERSIONS
     for (( x=0; x < $NUMIDS; x++ )); do
-      PLATFORM_VERSIONS[x]=$(adb devices | grep ${IDS[$x]} | cut -f 1 | xargs -I $ adb -s $ shell cat /system/build.prop | grep "ro.build.version.release" | cut -d "=" -f 2 | tr -d ' \r\t\n')
+      PLATFORM_VERSIONS[x]=$(adb devices | grep ${IDS[$x]} | cut -f 1 | xargs -I $ adb -s $ shell cat /system/build.prop 2> /dev/null | grep "ro.build.version.release" | cut -d "=" -f 2 | tr -d ' \r\t\n')
     done
 
     # Prompting user to select a device
