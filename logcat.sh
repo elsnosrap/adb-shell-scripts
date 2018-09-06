@@ -6,7 +6,7 @@ APP_ID="com.brightcove.lightbox"
 APP_ID2="com.brightcove.testvideo"
 
 # The regular expression to be used when filtering out lines
-FILTER_SUPPRESS_REGEX="onMeasure|setMeasuredDimension|WifiService|PowerManagerService|DeviceScanner"
+FILTER_SUPPRESS_REGEX="onMeasure|setMeasuredDimension|WifiService|PowerManagerService|DeviceScanner|WifiStateMachine"
 
 # Usage function
 function usage() {
