@@ -76,6 +76,7 @@ if [[ 0 -eq "$NUMIDS" ]]; then
 	echo "One or more devices / emulators must be connected."
 	exit 0;
 elif [[ 1 -eq "$NUMIDS" ]]; then
+    # Only one device
 	# See if we need to filter on APP_ID
 	if [[ -z $APP_ID ]]; then
 		# Not filtering on APP_ID, check if we need to filter out based on the regex variable
@@ -119,13 +120,13 @@ else
 	# Grab the model name for each device / emulator
 	declare -a MODEL_NAMES
 	for (( x=0; x < $NUMIDS; x++ )); do
-		MODEL_NAMES[x]=$(adb -s ${IDS[$x]} shell cat /system/build.prop | grep "ro.product.model" | cut -d "=" -f 2 | tr -d ' \r\t\n')
+		MODEL_NAMES[x]=$(adb -s ${IDS[$x]} shell cat /system/build.prop 2> /dev/null | grep "ro.product.model" | cut -d "=" -f 2 | tr -d ' \r\t\n')
 	done
 	
 	# Grab the platform version for each device / emulator
 	declare -a PLATFORM_VERSIONS
 	for (( x=0; x < $NUMIDS; x++ )); do
-		PLATFORM_VERSIONS[x]=$(adb -s ${IDS[$x]} shell cat /system/build.prop | grep "ro.build.version.release" | cut -d "=" -f 2 | tr -d ' \r\t\n')
+		PLATFORM_VERSIONS[x]=$(adb -s ${IDS[$x]} shell cat /system/build.prop 2> /dev/null | grep "ro.build.version.release" | cut -d "=" -f 2 | tr -d ' \r\t\n')
 	done
 	
 	echo "Multiple devices detected, please select one"
